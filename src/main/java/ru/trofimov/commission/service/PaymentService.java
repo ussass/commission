@@ -13,5 +13,5 @@ public interface PaymentService {
 
     List<Payment> findAll();
 
-    Payment save(Payment category);
+    Payment save(Payment payment);
 }

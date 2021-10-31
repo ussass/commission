@@ -22,8 +22,8 @@ public class PaymentRestController {
         this.paymentService = paymentService;
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<PaymentResponse> getPayment (@PathVariable long id,
+    @GetMapping("{number}")
+    public ResponseEntity<PaymentResponse> getPayment (@PathVariable long number,
                                                        @RequestParam(defaultValue = "-1") int month,
                                                        @RequestParam(defaultValue = "-1") int year) {
 
@@ -37,7 +37,7 @@ public class PaymentRestController {
         System.out.println("month = " + month);
         System.out.println("year = " + year);
 
-        PaymentResponse paymentResponse = paymentService.calculationOfCommissionForMonth(id, month, year);
+        PaymentResponse paymentResponse = paymentService.calculationOfCommissionForMonth(number, month, year);
 
         return new ResponseEntity<>(paymentResponse, HttpStatus.OK);
     }
@@ -51,7 +51,7 @@ public class PaymentRestController {
         }
         payment.setDate(new Date());
         paymentService.save(payment);
-        httpHeaders.add("Location", request.getRequestURL().toString() + payment.getId());
+        httpHeaders.add("Location", request.getRequestURL().toString() + payment.getPhoneNumber());
 
         return new ResponseEntity<>(payment, httpHeaders, HttpStatus.CREATED);
     }
